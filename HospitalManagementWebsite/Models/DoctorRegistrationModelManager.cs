@@ -5,15 +5,17 @@ namespace HospitalManagementWebsite.Models
 {
     public class DoctorRegistrationModelManager
     {
+        string con = System.Configuration.ConfigurationManager.ConnectionStrings["CON"].ConnectionString;
+
         // Connection string to the database
-        private readonly string connectionString = @"data source=SHAHEB;initial catalog=TDM;integrated security=sspi";
+       // private readonly string connectionString = @"data source=SHAHEB;initial catalog=TDM;integrated security=sspi";
 
         // Method to get the password hash from the database by email
         public string GetPasswordHashByEmail(string email)
         {
             string passwordHash = string.Empty; // Default value if no match is found.
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(con))
             {
                 // Query to get the password hash for the provided email
                 string query = "SELECT PassWord FROM DoctorRegistration WHERE Email = @Email";
@@ -45,7 +47,7 @@ namespace HospitalManagementWebsite.Models
         // Method for doctor registration
         public int DrRegistration(DoctorRegistration registration)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(con))
             {
                 // Insert the new doctor's registration data into the database
                 string query = "INSERT INTO DoctorRegistration (Name, Email, PassWord, Mob) " +
